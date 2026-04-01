@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Занятие 2 - Вика & Кристина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1a3a2a;
+    --forest-mid: #254d38;
+    --forest-light: #2d6347;
+    --sage: #4a7c5f;
+    --cream: #f2ede6;
+    --warm-white: #faf8f4;
+    --gold: #c9a96e;
+    --text-dark: #1a1a18;
+    --text-mid: #3d4a42;
+    --text-light: #8a9e92;
+    --error: #c0392b;
+    --success: #27ae60;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 36px 40px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(201,169,110,0.07);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 7vw, 68px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(242,237,230,0.6);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  /* ─── PLAYER SWITCHER ─── */
+  .player-switch {
+    display: flex;
+    gap: 10px;
+  }
+  .player-btn {
+    padding: 10px 28px;
+    border-radius: 2px;
+    border: 1px solid rgba(242,237,230,0.25);
+    background: transparent;
+    color: rgba(242,237,230,0.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .player-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--forest);
+  }
+  .player-btn:hover:not(.active) {
+    border-color: rgba(242,237,230,0.55);
+    color: var(--cream);
+  }
+
+  /* ─── INTRO BLOCK ─── */
+  .intro-block {
+    background: var(--forest-mid);
+    color: var(--cream);
+    padding: 16px 40px;
+    border-left: 3px solid var(--gold);
+  }
+  .intro-block p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(242,237,230,0.8);
+    font-weight: 300;
+  }
+  .intro-block strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ─── SECTION LABELS ─── */
+  .section-label {
+    background: var(--warm-white);
+    padding: 12px 40px 8px;
+    border-bottom: 1px solid rgba(26,58,42,0.1);
+  }
+  .section-label span {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+  .section-label h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--forest);
+    margin-top: 4px;
+  }
+
+  /* ─── EXERCISE CARD ─── */
+  .exercise-list {
+    padding: 0 24px 40px;
+    background: var(--warm-white);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .exercise-card {
+    background: white;
+    border: 1px solid rgba(26,58,42,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .exercise-card:hover {
+    box-shadow: 0 4px 20px rgba(26,58,42,0.08);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    cursor: pointer;
+    gap: 16px;
+  }
+  .card-header-left {
+    flex: 1;
+  }
+  .exercise-num {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .exercise-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .exercise-sets {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 400;
+  }
+  .exercise-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-warmup { background: rgba(201,169,110,0.15); color: #8a6530; }
+  .badge-main { background: rgba(26,58,42,0.1); color: var(--forest); }
+  .badge-new { background: rgba(39,174,96,0.12); color: #1a7a3c; }
+  .badge-rehab { background: rgba(192,57,43,0.1); color: #8a2520; }
+  .badge-core { background: rgba(74,124,95,0.15); color: #2d6347; }
+
+  /* ─── COLLAPSIBLE BODY ─── */
+  .card-body {
+    display: none;
+    border-top: 1px solid rgba(26,58,42,0.07);
+  }
+  .card-body.open { display: block; }
+
+  /* ─── WHY BLOCK ─── */
+  .why-block {
+    padding: 16px 24px;
+    background: rgba(26,58,42,0.03);
+    border-bottom: 1px solid rgba(26,58,42,0.06);
+  }
+  .why-block p {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+  .why-block strong { color: var(--forest); font-weight: 500; }
+
+  /* ─── VIDEO ─── */
+  .video-block {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(26,58,42,0.06);
+  }
+  .video-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--forest);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* ─── TRACKER ─── */
+  .tracker-block {
+    padding: 20px 24px;
+  }
+  .tracker-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .sets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .set-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .set-input-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 400;
+  }
+  .set-input {
+    display: flex;
+    gap: 6px;
+  }
+  .set-input input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid rgba(26,58,42,0.2);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    background: var(--warm-white);
+    transition: border-color 0.2s;
+    min-width: 0;
+  }
+  .set-input input:focus {
+    outline: none;
+    border-color: var(--sage);
+  }
+  .set-input input::placeholder { color: var(--text-light); }
+
+  .notes-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 400;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .notes-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(26,58,42,0.2);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    background: var(--warm-white);
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .notes-input:focus {
+    outline: none;
+    border-color: var(--sage);
+  }
+  .notes-input::placeholder { color: var(--text-light); }
+
+  .save-btn {
+    margin-top: 12px;
+    padding: 9px 22px;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .save-btn:hover { background: var(--forest-light); }
+  .save-btn.saved { background: var(--success); }
+
+  /* ─── VIKA SPECIAL NOTES ─── */
+  .rehab-note {
+    margin: 0 24px 16px;
+    padding: 12px 16px;
+    background: rgba(192,57,43,0.06);
+    border-left: 3px solid #c0392b;
+    border-radius: 0 2px 2px 0;
+  }
+  .rehab-note p {
+    font-size: 12px;
+    color: #8a2520;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+  .rehab-note strong { font-weight: 600; }
+
+  /* ─── EXPAND TOGGLE ─── */
+  .toggle-arrow {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .card-header.open .toggle-arrow { transform: rotate(180deg); }
+
+  /* ─── OUTRO / CLOSING ─── */
+  .outro {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 50px 40px;
+    margin-top: 40px;
+  }
+  .outro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .outro p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(242,237,230,0.75);
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 14px;
+  }
+  .outro strong { color: var(--cream); font-weight: 500; }
+
+  /* ─── STICKY PLAYER BAR ─── */
+  .sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sticky-bar .player-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--cream);
+    font-weight: 300;
+  }
+  .sticky-bar .player-name em { color: var(--gold); font-style: italic; }
+  .sticky-switch {
+    display: flex;
+    gap: 8px;
+  }
+  .sticky-btn {
+    padding: 6px 18px;
+    border-radius: 2px;
+    border: 1px solid rgba(242,237,230,0.2);
+    background: transparent;
+    color: rgba(242,237,230,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sticky-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--forest);
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .intro-block { padding: 20px; }
+    .section-label { padding: 14px 20px 10px; }
+    .exercise-list { padding: 16px 16px 32px; }
+    .card-header { padding: 16px 16px 12px; }
+    .why-block, .video-block, .tracker-block { padding: 14px 16px; }
+    .sticky-bar { padding: 10px 20px; }
+    .outro { padding: 36px 20px; }
+    .sets-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<div class="sticky-bar">
+  <div class="player-name">Занятие 2 - <em id="sticky-name">Вика</em></div>
+  <div class="sticky-switch">
+    <button class="sticky-btn active" onclick="switchPlayer('vika', this)">Вика</button>
+    <button class="sticky-btn" onclick="switchPlayer('kristina', this)">Кристина</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Тренировка №2 · Строим фундамент</div>
+  <h1>Без воды.<br><em>Без сюсюканий.</em></h1>
+  <div class="hero-sub">Вика и Кристина - переключайся вверху и заполняй свои данные</div>
+  <div class="player-switch">
+    <button class="player-btn active" onclick="switchPlayer('vika', this)">Вика</button>
+    <button class="player-btn" onclick="switchPlayer('kristina', this)">Кристина</button>
+  </div>
+</div>
+
+<!-- DYNAMIC INTRO -->
+<div class="intro-block" id="intro-block">
+  <p id="intro-text"></p>
+</div>
+
+<!-- ════════════ РАЗМИНКА ════════════ -->
+<div class="section-label">
+  <span>Блок 01</span>
+  <h2>Разминка - 12 минут</h2>
+</div>
+
+<div class="exercise-list">
+
+  <!-- 1. ВАЛИК -->
+  <div class="exercise-card" data-id="foam">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 01</div>
+        <div class="exercise-name">Миофасциальный релиз (валик)</div>
+        <div class="exercise-sets">Икры · Бёдра · Ягодицы - по 60 сек</div>
+      </div>
+      <span class="exercise-badge badge-warmup">Разминка</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Мышца под напряжением не включается нормально. Можешь приседать сколько угодно - если ткань зажата, сигнал до неё не доходит. <strong>Медленно. Нашла больную точку - остановилась, подышала, дала отпустить.</strong></p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/ANxKqzJaQhI" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Где было больно? Где лучше стало?"></textarea>
+        <button class="save-btn" onclick="saveData('foam', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ГОЛЕНОСТОП -->
+  <div class="exercise-card" data-id="ankle">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 02</div>
+        <div class="exercise-name">Вращения голеностопа</div>
+        <div class="exercise-sets">10 кругов на каждую ногу · Обе делают</div>
+      </div>
+      <span class="exercise-badge badge-rehab">Реабилитация</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Голеностоп после перелома деревенеет. И когда он не работает - <strong>колено начинает работать за него. А колену это не нужно.</strong> Для Вики это не опционально - это обязательно.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/s9NsB6jY1LQ" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div id="rehab-ankle" class="rehab-note" style="display:none">
+        <p><strong>Вика, особо:</strong> это упражнение для тебя приоритет №1. Голеностоп определяет всё что выше.</p>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Симметрия? Есть ограничение в объёме движения?"></textarea>
+        <button class="save-btn" onclick="saveData('ankle', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ЯГОДИЧНЫЙ МОСТ -->
+  <div class="exercise-card" data-id="glute-bridge">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 03</div>
+        <div class="exercise-name">Ягодичный мост лёжа</div>
+        <div class="exercise-sets">2 × 15 · Медленно · Пауза наверху</div>
+      </div>
+      <span class="exercise-badge badge-warmup">Активация</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Это не разминка - это <strong>включение</strong>. Если ягодицы не проснулись до основной работы - в приседе и тяге они будут спать, а вместо них впашет поясница. Потом будет болеть поясница.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/wPM8icPu6H8" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="15" min="1" max="30" data-field="reps1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="15" min="1" max="30" data-field="reps2"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Чувствовала ягодицы? Или поясницу?"></textarea>
+        <button class="save-btn" onclick="saveData('glute-bridge', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. BIRD DOG -->
+  <div class="exercise-card" data-id="bird-dog">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 04</div>
+        <div class="exercise-name">Bird Dog</div>
+        <div class="exercise-sets">2 × 8 на каждую сторону · Без качания тазом</div>
+      </div>
+      <span class="exercise-badge badge-core">Кор</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Глубокие мышцы позвоночника. Они не видны в зеркале - но именно они держат тебя вертикально под нагрузкой. <strong>Без них ты не приседаешь - ты складываешься.</strong> Рука вперёд, противоположная нога назад. Медленно.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/wiFNA3sqjCA" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="8" min="1" max="20" data-field="reps1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="8" min="1" max="20" data-field="reps2"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Удавалось не качать таз? Какая сторона слабее?"></textarea>
+        <button class="save-btn" onclick="saveData('bird-dog', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. ПРИСЕД У СТЕНЫ -->
+  <div class="exercise-card" data-id="wall-squat">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 05</div>
+        <div class="exercise-name">Присед у стены</div>
+        <div class="exercise-sets">3 × 30-60 сек · Бедра параллельно полу</div>
+      </div>
+      <span class="exercise-badge badge-rehab">Стабилизация</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Статическая работа квадрицепса и ягодиц без нагрузки на сустав. Спина прямая, прижата к стене, бедра под углом 90 градусов. <strong>Это не про боль в ногах - это про то, чтобы мышца научилась держать угол без помощи сустава.</strong> Идеально после перелома: нога работает, сустав не компрессируется динамикой.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/y-wV4Venusw" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div id="rehab-side" class="rehab-note" style="display:none">
+        <p><strong>Вика:</strong> если чувствуешь разницу в усилии между ногами - это нормально. Не переносить вес на здоровую ногу, держать распределение равномерным. Если одно бедро дрожит сильнее - запиши.</p>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - время (сек)</div>
+            <div class="set-input"><input type="number" placeholder="30" data-field="t1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - время (сек)</div>
+            <div class="set-input"><input type="number" placeholder="30" data-field="t2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - время (сек)</div>
+            <div class="set-input"><input type="number" placeholder="30" data-field="t3"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Где горело? Симметрия между ногами? Дрожание?"></textarea>
+        <button class="save-btn" onclick="saveData('wall-squat', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ ОСНОВНОЙ БЛОК ════════════ -->
+<div class="section-label">
+  <span>Блок 02</span>
+  <h2>Основная работа</h2>
+</div>
+
+<div class="exercise-list">
+
+  <!-- 6. ПРИСЕД НА ТУМБУ -->
+  <div class="exercise-card" data-id="box-squat">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 06</div>
+        <div class="exercise-name">Присед на тумбу</div>
+        <div class="exercise-sets">3 × 10 · 3 секунды вниз · Чуть коснуться и встать</div>
+      </div>
+      <span class="exercise-badge badge-main">Основное</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p><strong>3 секунды вниз - это эксцентрика.</strong> Именно здесь мышца реально растёт и учится защищать сустав. Если падаешь вниз быстро - ты просто перемещаешь вес из точки А в точку Б. Смысла ноль. Должно ощущаться жжение в бёдрах и ягодицах, не боль в суставе.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/U3HlEF_E9fo" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div id="rehab-squat" class="rehab-note" style="display:none">
+        <p><strong>Вика - после каждого подхода:</strong> встань на ту ногу. Одну. 20 секунд. Держись за стойку если надо - но стоишь. Это проприорецепция - мозг заново учится доверять ноге. Без этого риск повторной травмы остаётся.</p>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="10" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Чувствовала ягодицы? Спину держала? Сложность по шкале 1-10?"></textarea>
+        <button class="save-btn" onclick="saveData('box-squat', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. РУМЫНСКАЯ ТЯГА -->
+  <div class="exercise-card" data-id="rdl">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 07</div>
+        <div class="exercise-name">Румынская тяга с гантелями</div>
+        <div class="exercise-sets">3 × 10 · Пауза внизу · Спина прямая</div>
+      </div>
+      <span class="exercise-badge badge-main">Основное</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Задняя поверхность бедра и ягодицы - это <strong>живой бандаж для коленного и тазобедренного сустава</strong>. Слабые - сустав принимает всё на себя. Сильные - они перехватывают нагрузку. Пауза внизу: секунда, почувствовала натяжение по задней поверхности - вот отсюда встаёшь. Округлённая поясница - главная ошибка.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/hCDzSR6bW10" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="10" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Чувствовала заднюю поверхность? Спина держалась? Нужно больше / меньше веса?"></textarea>
+        <button class="save-btn" onclick="saveData('rdl', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. ЖИМ ЛЁЖА -->
+  <div class="exercise-card" data-id="db-press">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 08</div>
+        <div class="exercise-name">Жим гантелей лёжа</div>
+        <div class="exercise-sets">3 × 10 · НОВОЕ · Локти 45° к телу</div>
+      </div>
+      <span class="exercise-badge badge-new">Новое</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Тело работает по принципу «тяни–толкай». Только тяга без жима - дисбаланс, плохая осанка и перегруженные плечи через месяц. <strong>Лопатки сведены и вжаты в скамью - они не двигаются.</strong> Если горят плечи - хват слишком широкий. Должна работать грудь.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/VmB1G1K7v94" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="0.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="10" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Грудь работала? Плечи не горели? Стартовый вес?"></textarea>
+        <button class="save-btn" onclick="saveData('db-press', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. ТЯГА ВЕРХНЕГО БЛОКА -->
+  <div class="exercise-card" data-id="lat-pulldown">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 09</div>
+        <div class="exercise-name">Тяга верхнего блока</div>
+        <div class="exercise-sets">3 × 10–12 · Сначала лопатки - потом руки</div>
+      </div>
+      <span class="exercise-badge badge-main">Основное</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p><strong>Не тянуть руками.</strong> Сначала лопатки идут вниз и назад - потом руки сгибаются. Если тянешь руками - качаешь бицепс. Если начинаешь с лопаток - качаешь широчайшие. А это осанка, здоровые плечи и та самая форма спины. Прогрессия: +2.5–5 кг если прошлый раз было технично.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/CAwf7n6Luuc" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="10" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Чувствовала широчайшие? Начинала с лопаток?"></textarea>
+        <button class="save-btn" onclick="saveData('lat-pulldown', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. ГОРИЗОНТАЛЬНЫЙ БЛОК -->
+  <div class="exercise-card" data-id="cable-row">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 10</div>
+        <div class="exercise-name">Тяга горизонтального блока</div>
+        <div class="exercise-sets">3 × 12 · Пауза 1 сек · Возврат 2 сек</div>
+      </div>
+      <span class="exercise-badge badge-main">Основное</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Вес не трогаем - работаем на качество. <strong>Пауза в конечной точке: сжала лопатки - почувствовала спину. Потом отпускаем медленно - 2 секунды.</strong> Корпус - статичный якорь. Не качайся - это читинг, убирающий нагрузку оттуда, куда она должна идти.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/GZbfZ033f74" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="12" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Держала корпус? Чувствовала паузу в лопатках?"></textarea>
+        <button class="save-btn" onclick="saveData('cable-row', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. РАЗВЕДЕНИЕ НОГ -->
+  <div class="exercise-card" data-id="abductor">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 11</div>
+        <div class="exercise-name">Разведение ног в тренажёре</div>
+        <div class="exercise-sets">3 × 15 · Возврат 3 секунды</div>
+      </div>
+      <span class="exercise-badge badge-main">Основное</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Секрет этого упражнения - не скорость, а <strong>возврат</strong>. Медленно возвращаешь ноги назад - 3 секунды. Именно там растёт средняя ягодица. Быстро туда-обратно - это имитация тренировки, не тренировка. +вес если прошлый раз было легко.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/YaXPRqUwItQ" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div id="rehab-abductor" class="rehab-note" style="display:none">
+        <p><strong>Вика:</strong> следи на симметрию усилия. Если одна нога тянет слабее - это нормально, это пройдёт. Просто фиксируй в заметке.</p>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w2"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 3 - вес (кг)</div>
+            <div class="set-input"><input type="number" placeholder="-" step="2.5" data-field="w3"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Повторы выполнено</div>
+            <div class="set-input"><input type="number" placeholder="15" data-field="reps"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / RPE (1–10)</div>
+        <textarea class="notes-input" placeholder="Медленный возврат получался? Симметрия?"></textarea>
+        <button class="save-btn" onclick="saveData('abductor', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. DEAD BUG -->
+  <div class="exercise-card" data-id="dead-bug">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="exercise-num">Упражнение 12</div>
+        <div class="exercise-name">Dead Bug</div>
+        <div class="exercise-sets">2 × 8 на каждую сторону · НОВОЕ · Поясница не отрывается</div>
+      </div>
+      <span class="exercise-badge badge-new">Новое</span>
+      <div class="toggle-arrow">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="why-block">
+        <p>Самое честное упражнение на глубокий кор - без нагрузки на позвоночник. После реабилитации кор буквально «выключается». И потом человек нагружает спину, колени - а кор молчит. <strong>Вот откуда повторные травмы.</strong> Правило одно: поясница не отрывается от пола. Никогда. Если отрывается - меньше амплитуда.</p>
+      </div>
+      <div class="video-block">
+        <div class="video-label">Техника выполнения</div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/4XLEnwUr1d8" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="tracker-block">
+        <div class="tracker-title">Твои данные</div>
+        <div class="sets-grid">
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 1 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="8" data-field="reps1"></div>
+          </div>
+          <div class="set-input-group">
+            <div class="set-input-label">Подход 2 - повторы</div>
+            <div class="set-input"><input type="number" placeholder="8" data-field="reps2"></div>
+          </div>
+        </div>
+        <div class="notes-label">Ощущения / заметки</div>
+        <textarea class="notes-input" placeholder="Поясница держалась? Дышала? Какая сторона сложнее?"></textarea>
+        <button class="save-btn" onclick="saveData('dead-bug', this)">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ OUTRO ════════════ -->
+<div class="outro">
+  <h2 id="outro-title">Вика, слушай сюда.</h2>
+  <p id="outro-text-1"></p>
+  <p id="outro-text-2"></p>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────
+let currentPlayer = 'vika';
+
+const PLAYERS = {
+  vika: {
+    name: 'Вика',
+    intro: '<strong>Вика.</strong> Твоя нога срослась - но нервная система в это ещё не верит. Баланс на одной ноге, Bird Dog, Dead Bug - это не «лёгкие упражнения». Это работа с тем, о чём 99% тренеров забывают после реабилитации. Именно это отделяет «кость срослась» от «я снова двигаюсь уверенно».',
+    outro1: 'Твоя нога срослась - но твоя нервная система в это ещё не верит. Всё что ты сделала сегодня - это не «слабая тренировка». Это <strong>перепрошивка</strong> того, как твой мозг общается с ногой.',
+    outro2: 'Баланс, Bird Dog, Dead Bug - именно это отделяет «кость срослась» от «я снова двигаюсь уверенно». Результат неизбежен. Если фундамент есть.',
+    rehabIds: ['rehab-ankle','rehab-side','rehab-squat','rehab-abductor']
+  },
+  kristina: {
+    name: 'Кристина',
+    intro: '<strong>Кристина.</strong> Забудь про вес пока. Серьёзно. Твоя задача сейчас - <strong>почувствовать мышцу, которая должна работать</strong>. Если в румынке не чувствуешь заднюю поверхность - ты качаешь поясницу. Если в тяге не чувствуешь спину - ты качаешь руки. Кг на грифе - это просто цифра. Связь мозг–мышца - вот тренировка.',
+    outro1: 'Ты пришла второй раз - и это уже больше, чем делает большинство. Связь мозг–мышца - это и есть тренировка. Всё остальное придёт.',
+    outro2: '<strong>Ощущение > вес.</strong> Если сегодня в каждом упражнении ты чувствовала именно ту мышцу которая должна работать - это 100% результат. Следующий раз прогрессируем вес.',
+    rehabIds: []
+  }
+};
+
+// ─── SWITCH PLAYER ────────────────────────────────────────
+function switchPlayer(name, btn) {
+  currentPlayer = name;
+  const p = PLAYERS[name];
+
+  // Update sticky bar
+  document.getElementById('sticky-name').textContent = p.name;
+  document.querySelectorAll('.sticky-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
+
+  // Update all buttons
+  document.querySelectorAll('.sticky-btn, .player-btn').forEach(b => {
+    if (b.textContent.trim() === p.name) b.classList.add('active');
+  });
+
+  // Intro
+  document.getElementById('intro-text').innerHTML = p.intro;
+
+  // Outro
+  document.getElementById('outro-title').textContent = p.name + ', слушай сюда.';
+  document.getElementById('outro-text-1').innerHTML = p.outro1;
+  document.getElementById('outro-text-2').innerHTML = p.outro2;
+
+  // Rehab notes - show for Vika only
+  ['rehab-ankle','rehab-side','rehab-squat','rehab-abductor'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = p.rehabIds.includes(id) ? 'block' : 'none';
+  });
+
+  // Restore saved data for this player
+  loadAllData();
+}
+
+// ─── TOGGLE CARD ──────────────────────────────────────────
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+// ─── SAVE / LOAD ──────────────────────────────────────────
+function getStorageKey(exerciseId) {
+  return `coach_${currentPlayer}_${exerciseId}`;
+}
+
+function saveData(exerciseId, btn) {
+  const card = btn.closest('.exercise-card');
+  const data = {};
+
+  card.querySelectorAll('input[data-field]').forEach(input => {
+    data[input.dataset.field] = input.value;
+  });
+  const textarea = card.querySelector('textarea');
+  if (textarea) data.notes = textarea.value;
+  data.savedAt = new Date().toLocaleDateString('ru-RU', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+
+  try {
+    localStorage.setItem(getStorageKey(exerciseId), JSON.stringify(data));
+    btn.textContent = '✓ Сохранено ' + data.savedAt;
+    btn.classList.add('saved');
+    setTimeout(() => {
+      btn.textContent = 'Сохранить';
+      btn.classList.remove('saved');
+    }, 3000);
+  } catch(e) {
+    btn.textContent = 'Ошибка сохранения';
+  }
+}
+
+function loadAllData() {
+  document.querySelectorAll('.exercise-card').forEach(card => {
+    const id = card.dataset.id;
+    const key = getStorageKey(id);
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+
+      card.querySelectorAll('input[data-field]').forEach(input => {
+        if (data[input.dataset.field] !== undefined) {
+          input.value = data[input.dataset.field];
+        }
+      });
+      const textarea = card.querySelector('textarea');
+      if (textarea && data.notes !== undefined) textarea.value = data.notes;
+
+      if (data.savedAt) {
+        const btn = card.querySelector('.save-btn');
+        if (btn) btn.title = 'Последнее сохранение: ' + data.savedAt;
+      }
+    } catch(e) {}
+  });
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  switchPlayer('vika', null);
+});
+</script>
+</body>
+</html>
